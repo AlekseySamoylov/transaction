@@ -1,0 +1,11 @@
+app:
+  database-first:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/public_db
+    user: db_user
+    password: sql
+  database-second:
+    driver: org.postgresql.Driver
+    url: hello
+    user: world
+    password: sql
