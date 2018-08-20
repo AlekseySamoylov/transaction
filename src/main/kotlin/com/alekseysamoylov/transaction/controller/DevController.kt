@@ -13,7 +13,37 @@ class DevController {
     private lateinit var transactionTestService: TransactionTestService
 
     @RequestMapping("/product/{id}")
-    fun startTransaction(@PathVariable id: Int): String {
+    fun getProduct(@PathVariable id: Int): String {
         return transactionTestService.getProductName(id)
+    }
+
+    @RequestMapping("/txr1")
+    fun startTransactionRollback(): String {
+        transactionTestService.transactionTestRollbackFirst()
+        return "ok"
+    }
+
+    @RequestMapping("/txs1")
+    fun startTransactionSuccess(): String {
+        transactionTestService.transactionTestSuccessFirst()
+        return "ok"
+    }
+
+    @RequestMapping("/txr2")
+    fun startTransactionRollbackSecond(): String {
+        transactionTestService.transactionTestRollbackSecond()
+        return "ok"
+    }
+
+    @RequestMapping("/txrf2")
+    fun startTransactionRollbackFailedSecond(): String {
+        transactionTestService.transactionTestRollbackFailedSecond()
+        return "ok"
+    }
+
+    @RequestMapping("/txs2")
+    fun startTransactionSuccessSecond(): String {
+        transactionTestService.transactionTestSuccessSecond()
+        return "ok"
     }
 }

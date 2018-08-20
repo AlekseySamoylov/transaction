@@ -12,13 +12,14 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.jooq.SpringTransactionProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
 import javax.sql.DataSource
 
 
 @Configuration
-class DatabaseConfiguration {
+class DatabaseConfigurationFirst {
 
     @Value("\${app.database-first.driver}")
     private lateinit var databaseFirstDriver: String
@@ -32,6 +33,7 @@ class DatabaseConfiguration {
     @Value("\${app.database-first.password}")
     private lateinit var databaseFirstPassword: String
 
+    @Primary
     @Bean("datasourceFirst")
     fun datasourceFirst(): DataSource {
         val datasoruce = HikariDataSource()
@@ -42,17 +44,18 @@ class DatabaseConfiguration {
         return datasoruce
     }
 
-    @Bean
+    @Primary
+    @Bean("txManagerFirst")
     fun transactionManagerFirst(): DataSourceTransactionManager {
         return DataSourceTransactionManager(datasourceFirst())
     }
 
-    @Bean
+    @Bean("connectionProviderFirst")
     fun connectionProviderFirst(): ConnectionProvider {
         return DataSourceConnectionProvider(TransactionAwareDataSourceProxy(datasourceFirst()))
     }
 
-    @Bean
+    @Bean("txProviderFirst")
     fun transactionProviderFirst(): TransactionProvider {
         return SpringTransactionProvider(transactionManagerFirst())
     }
@@ -66,5 +69,4 @@ class DatabaseConfiguration {
         return DefaultDSLContext(defaultConfiguration)
 
     }
-
 }

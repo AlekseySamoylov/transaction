@@ -6,6 +6,17 @@ app:
     password: sql
   database-second:
     driver: org.postgresql.Driver
-    url: hello
-    user: world
+    url: jdbc:postgresql://localhost:5432/public_db_second
+    user: db_user
     password: sql
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/public_db
+    username: db_user
+    password: sql
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
